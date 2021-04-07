@@ -232,7 +232,7 @@ SQL Tools
 
 ```sqlmap -u http//10.7.7.5/login.jsp --data "username=23&password=23" -D public -T users -dump 
 
-Some other useful sql options
+Some other useful sqlmap options
 
 -f fingerprint target
 -b returns DBMS banner
